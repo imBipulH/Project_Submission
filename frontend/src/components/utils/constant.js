@@ -1,1 +1,1 @@
-export const BASE_URL = "https://project-submission-tiho.vercel.app/"
+export const BASE_URL = "https://project-submission-3.onrender.com/"
