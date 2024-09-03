@@ -38,7 +38,7 @@ const SignUp = () => {
         window.location.href = '/login'
       }
     } catch (error) {
-      console.log(error)
+      setError(error.response.data.error)
     }
   }
 
@@ -46,11 +46,15 @@ const SignUp = () => {
     <div>
       <div className='absolute w-full top-20 '>
         <div className='container rounded'>
-          <div className='container w-full bg-white relative pt-10 px-4 md:px-40'>
+          <div className='container w-full max-w-96 bg-white relative pt-10 px-4'>
             <h2 className='bg-teal-500 text-3xl py-4 text-center text-white'>
               Sign Up
             </h2>
-            {error && <p className='text-sm text-red-500'>{error}</p>}
+            {error && (
+              <p className='text-base text-white bg-red-400 py-2 w-full text-center mt-4'>
+                {error}
+              </p>
+            )}
             <Input
               title='Full Name'
               name='fullName'

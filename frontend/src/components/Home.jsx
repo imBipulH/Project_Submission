@@ -5,6 +5,7 @@ import { getInitials } from './ui/helper'
 
 const Home = () => {
   const [showUpload, setShowUpload] = useState(false)
+  const [showLogout, setShowLogout] = useState(false)
   const [allProject, setAllProjects] = useState([])
   const [user, setUser] = useState()
 
@@ -57,6 +58,10 @@ const Home = () => {
     window.location.href = '/login'
   }
 
+  const handleToggleLogout = () => {
+    setShowLogout(!showLogout)
+  }
+
   const handleColseUpload = () => {
     setShowUpload(false)
   }
@@ -64,30 +69,44 @@ const Home = () => {
   return (
     <>
       <div className={`${showUpload && 'blur-sm'}`}>
+        {/* Navbar Part Start */}
         <div className='relative'>
-          <div className=' flex justify-between items-center px-8 py-4 text-white bg-teal-500 text-3xl'>
-            <h2 className=' text-center '>
+          <div className=' flex justify-between items-center px-2 md:px-8 py-4 text-white bg-teal-500 md:text-3xl'>
+            <h2 className='md:text-center max-w-[50dvw]'>
               Project&apos;s Submission Dashboard
             </h2>
-            <div className='flex items-center gap-2'>
-              <p className='w-12 aspect-square flex items-center justify-center rounded-full text-teal-500 font-medium bg-slate-100'>
+            <div className='flex flex-row-reverse items-center gap-2 relative'>
+              {/* Logout Card */}
+              {showLogout && (
+                <p
+                  className='absolute top-16 bg-teal-400 px-4 py-2 text-sm flex items-center gap-2 ml-4 cursor-pointer'
+                  onClick={onLogOut}
+                >
+                  <span className='text-sm md:text-xl'>Logout</span>
+                  <span className='material-symbols-outlined text-sm md:text-xl'>
+                    logout
+                  </span>
+                </p>
+              )}
+
+              <p
+                className='w-12 aspect-square flex items-center justify-center rounded-full text-teal-500 font-medium bg-slate-100 cursor-pointer text-xl'
+                onClick={handleToggleLogout}
+              >
                 {user && getInitials(user.fullName)}
               </p>
-              <p>{user && user.fullName}</p>
-              <p
-                className='text-sm flex items-center gap-2 ml-4 cursor-pointer'
-                onClick={onLogOut}
-              >
-                <span className='material-symbols-outlined'>logout</span>
-              </p>
+              <p className='min-w-fit text-xl'>{user && user.fullName}</p>
             </div>
           </div>
 
           {/* Container Part */}
-          <div className='container h-full relative pt-10'>
+          <div className='container h-full relative pt-8 pb-14'>
             {allProject.map((item, i) => (
-              <div key={item._id} className='flex justify-center gap-8 my-2'>
-                <p className='bg-teal-50 text-teal-700 px-4 py-2 rounded'>
+              <div
+                key={item._id}
+                className='flex flex-wrap md:flex-row justify-center gap-2 sm:gap-8 my-2 border md:border-none shadow-md md:shadow-none'
+              >
+                <p className=' bg-teal-50 text-teal-700 px-4 py-2 rounded'>
                   {i + 1}
                 </p>
                 <h4 className='bg-teal-50 min-w-52 text-teal-700 px-4 py-2 rounded'>
@@ -96,14 +115,12 @@ const Home = () => {
                 <h4 className='bg-teal-50 min-w-52 text-teal-700 px-4 py-2 rounded'>
                   {item.user.email}
                 </h4>
-                <button
-                  className={` px-4 py-2 rounded text-white  hover:shadow-xl ${
-                    item.user._id == user._id || user.role == 'teacher'
-                      ? 'cursor-pointer bg-teal-500 active:bg-teal-400'
-                      : 'cursor-not-allowed bg-teal-50 text-teal-700'
-                  }`}
-                >
-                  {item.user._id == user._id || user.role == 'teacher' ? (
+                {item.user._id == user._id || user.role == 'teacher' ? (
+                  <button
+                    className="px-4 py-2 rounded hover:shadow-xl 
+                        'cursor-pointer bg-teal-500 text-white active:bg-teal-400'
+                        '"
+                  >
                     <a
                       className={`${
                         item.user._id == user._id
@@ -120,10 +137,12 @@ const Home = () => {
                     >
                       GitHub Link
                     </a>
-                  ) : (
-                    <p className='bg-teal-50'>GitHub Link</p>
-                  )}
-                </button>
+                  </button>
+                ) : (
+                  <button className='px-4 py-2 rounded hover:shadow-xl  cursor-not-allowed bg-teal-50 text-teal-700'>
+                    GitHub Link
+                  </button>
+                )}
                 <button className='bg-teal-500 px-4 py-2 rounded text-white active:bg-teal-400 hover:shadow-xl'>
                   <a href={item.previewLink} target='_blank' className=''>
                     Preview Link
@@ -147,12 +166,12 @@ const Home = () => {
         </div>
 
         {/* Project Add Button */}
+
         <button
-          className='absolute bottom-4 right-4 bg-teal-500 text-white p-4 rounded-md text-2xl'
+          className='fixed bottom-4 md:bottom-4 right-4 bg-teal-500 text-white p-4 rounded-md md:text-2xl'
           onClick={() => setShowUpload(!showUpload)}
         >
-          Add new project{' '}
-          <span className='material-symbols-outlined text-3xl'></span>
+          Add new project
         </button>
       </div>
       {showUpload && (

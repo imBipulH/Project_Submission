@@ -45,29 +45,29 @@ const Upload = ({ handleColseUpload, getAllProject }) => {
       handleColseUpload()
       getAllProject()
     } catch (error) {
-      console.log(error)
+      const err = error.response.data.error.message.split('(')[0]
+      setError(err)
     }
   }
 
   const handleChange = e => {
-    console.log(e)
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
   return (
     <div className='absolute w-full top-20 '>
-      <span
-        className='material-symbols-outlined absolute right-20 top-0 text-teal-500 text-4xl cursor-pointer hover:bg-teal-50 rounded-full duration-200 p-2'
-        onClick={handleColseUpload}
-      >
-        close
-      </span>
-      <div className='container rounded'>
+      <div className='container relative bg-white rounded max-w-screen-md shadow-xl mt-14 pb-14'>
+        <span
+          className='material-symbols-outlined absolute right-4 top-2 text-white text-3xl cursor-pointer hover:bg-teal-400 rounded duration-200 p-1'
+          onClick={handleColseUpload}
+        >
+          close
+        </span>
         <h2 className='bg-teal-500 text-3xl py-4 text-center text-white'>
           Upload Your Project-Links Here
         </h2>
         <div className='container w-full bg-white relative pt-10 px-20'>
-          {error && <p className='text-sm text-red-500'>{error}</p>}
+          {error && <p className='text-sm text-red-500'>* {error}</p>}
           <Input
             title='GitHub Link'
             name='githubLink'
