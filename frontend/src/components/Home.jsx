@@ -71,7 +71,7 @@ const Home = () => {
       <div className={`${showUpload && 'blur-sm'}`}>
         {/* Navbar Part Start */}
         <div className='relative'>
-          <div className=' flex justify-between items-center px-2 md:px-8 py-4 text-white bg-teal-500 md:text-3xl'>
+          <div className='fixed md:static flex justify-between items-center px-2 md:px-8 py-4 text-white bg-teal-500 md:text-3xl z-10'>
             <h2 className='md:text-center max-w-[50dvw]'>
               Project&apos;s Submission Dashboard
             </h2>
@@ -100,11 +100,11 @@ const Home = () => {
           </div>
 
           {/* Container Part */}
-          <div className='container h-full relative pt-8 pb-14'>
+          <div className='container h-full relative pt-20 md:pt-8 pb-14'>
             {allProject.map((item, i) => (
               <div
                 key={item._id}
-                className='flex flex-wrap md:flex-row justify-center gap-2 sm:gap-8 my-2 border md:border-none shadow-md md:shadow-none'
+                className='flex flex-wrap md:flex-row justify-center gap-2 sm:gap-8 py-2 my-2 border md:border-none shadow-md md:shadow-none'
               >
                 <p className=' bg-teal-50 text-teal-700 px-4 py-2 rounded'>
                   {i + 1}
