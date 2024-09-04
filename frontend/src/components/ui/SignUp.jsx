@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Input } from './Input'
 import { Link } from 'react-router-dom'
 import axiosInstance from '../utils/axiosinstance'
+import { validateEmail } from './helper'
 
 const SignUp = () => {
   const [error, setError] = useState('')
@@ -17,6 +18,10 @@ const SignUp = () => {
   const handleSignUp = async () => {
     if (!data.fullName || !data.email || !data.password) {
       setError('Please fill all fields')
+      return
+    }
+    if (!validateEmail(data.email)) {
+      setError('Invalid email format')
       return
     }
     setError('')
@@ -38,7 +43,11 @@ const SignUp = () => {
         window.location.href = '/login'
       }
     } catch (error) {
-      setError(error.response.data.error)
+      if (error.response.data.error) {
+        setError(error.response.data.error)
+      }
+      console.log(error);
+      
     }
   }
 
