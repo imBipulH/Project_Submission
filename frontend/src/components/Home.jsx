@@ -7,6 +7,7 @@ const Home = () => {
   const [showUpload, setShowUpload] = useState(false)
   const [showLogout, setShowLogout] = useState(false)
   const [allProject, setAllProjects] = useState([])
+  const [deleteLink, setDeleteLink] = useState(null)
   const [user, setUser] = useState()
 
   // Get All Projects
@@ -64,6 +65,12 @@ const Home = () => {
 
   const handleColseUpload = () => {
     setShowUpload(false)
+  }
+
+  const handleDeleteClick = item => {
+    if (item && item.user._id == user._id) {
+      setDeleteLink(item._id)
+    }
   }
 
   return (
@@ -148,13 +155,32 @@ const Home = () => {
                     Preview Link
                   </a>
                 </button>
-                <div className='flex items-center'>
+                <div className='flex items-center relative'>
+                  {deleteLink == item._id && (
+                    <div className='absolute top-0 right-14 bg-teal-50 flex flex-col min-w-44 py-8 px-8 justify-center border shadow-md'>
+                      <p className='text-center mb-4 text-2xl'>Are you sure?</p>
+                      <div className='flex justify-center gap-2'>
+                        <button
+                          className='px-4 py-2 bg-red-500 active:bg-red-400 text-white rounded'
+                          onClick={() => deleteLinks(item._id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className='px-4 py-2 bg-teal-500 active:bg-teal-400 text-white rounded'
+                          onClick={() => setDeleteLink(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <span
-                    onClick={() => deleteLinks(item._id)}
+                    onClick={() => handleDeleteClick(item)}
                     className={`${
                       item.user._id == user._id
                         ? 'text-teal-500 hover:text-red-500 cursor-pointer'
-                        : 'text-gray-300 select-none'
+                        : 'text-gray-300 select-none cursor-not-allowed'
                     }  material-symbols-outlined `}
                   >
                     delete
