@@ -177,11 +177,11 @@ const Home = () => {
                   )}
                   <span
                     onClick={() => handleDeleteClick(item)}
-                    className={`${
+                    className={`material-symbols-outlined ${
                       item.user._id == user._id
                         ? 'text-teal-500 hover:text-red-500 cursor-pointer'
                         : 'text-gray-300 select-none cursor-not-allowed'
-                    }  material-symbols-outlined `}
+                    }`}
                   >
                     delete
                   </span>
